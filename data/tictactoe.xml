@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<bot language="Python" game="TICTACTOE">
+  <token>LcciKUjlsyhxUjxFhBIIQgJnKzWCODIfEQGpAOglzBRZFWDjAO</token>
+  <name>py-jnr</name>
+  <version>1.0.0</version>
+  <endpoint>http://192.168.1.5:8080</endpoint>
+  <url>http://894b18e9.ngrok.io/rpc</url>
+</bot>
