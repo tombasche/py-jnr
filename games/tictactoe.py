@@ -18,10 +18,15 @@ class TicTacToe:
             else:
                 availableMoves[index] = False
 
-        for move in range(len(availableMoves)):
-            randomIndex = random.randrange(len(availableMoves))
-            if availableMoves[randomIndex] == True:
-                return randomIndex
+        for i in range(len(availableMoves)):
+            if availablesMoves[index] == True and index % 2 == 0 and index != 4:        
+                return i
+            elif availablesMoves[index] == True:
+                return i
+        # for move in range(len(availableMoves)):
+        #     randomIndex = random.randrange(len(availableMoves))
+        #     if availableMoves[randomIndex] == True:
+        #         return randomIndex
 
 
     @staticmethod

@@ -30,8 +30,6 @@ class Player(object):
             if child.tag == 'url':
                 url = child.text
 
-        jsonData = json.dumps(data)
-
         registerMessage = {
            "method": "RegistrationService.Register",
            "params": data,
@@ -39,7 +37,5 @@ class Player(object):
            "id": 1
         }
 
-        response = requests.post(
-            url, data=json.dumps(registerMessage), headers=headers).json()
-        print response 
-
+        response = requests.post(url, data=json.dumps(registerMessage), headers=headers)
+        print response
