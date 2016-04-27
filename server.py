@@ -6,6 +6,7 @@ from werkzeug.serving import run_simple
 
 from jsonrpc import JSONRPCResponseManager, dispatcher
 from games.tictactoe import TicTacToe
+from games.scrabble import Scrabble
 from games.player import Player
 
 
@@ -21,6 +22,11 @@ def application(request):
         dispatcher["TicTacToe.Error"] = TicTacToe.Error
         dispatcher["TicTacToe.NextMove"] = TicTacToe.NextMove
         dispatcher["TicTacToe.Complete"] = TicTacToe.Complete
+    elif sys.argv[1] == 'scrabble':
+        s = Scrabble()
+        dispatcher["Scrabble.Ping"] = Scrabble.Ping
+        pass
+        #todo - put scrabble functions in here
 
     response = JSONRPCResponseManager.handle(
         request.data, dispatcher)
@@ -31,6 +37,7 @@ def application(request):
 if __name__ == '__main__':
     try:
         p = Player(str(sys.argv[1]))
-        run_simple('0.0.0.0', 8080, application)
+        #run_simple('0.0.0.0', 8080, application)
+        run_simple('localhost', 8080, application)
     except IndexError as err: 
        print 'Please enter the name of the game to play (tictactoe, snap etc)'
