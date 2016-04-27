@@ -12,7 +12,7 @@ class Scrabble(object):
     # use to test for now
     @staticmethod
     def Ping():
-        #Scrabble.board.PrintBoard()
+        Scrabble.board.PrintBoard()
         pass
 
     @staticmethod
