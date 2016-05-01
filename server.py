@@ -18,7 +18,9 @@ def application(request):
 
     # if we pass in the arg "tictactoe" then we know to accept tictactoe messages
     if sys.argv[1] == "tictactoe":  
-        t = TicTacToe()
+        jsonLoad = json.loads(request.data)
+        gamestate = jsonLoad['params']['gamestate']
+
         dispatcher["TicTacToe.Error"] = TicTacToe.Error
         dispatcher["TicTacToe.NextMove"] = TicTacToe.NextMove
         dispatcher["TicTacToe.Complete"] = TicTacToe.Complete
@@ -37,7 +39,7 @@ def application(request):
 if __name__ == '__main__':
     try:
         p = Player(str(sys.argv[1]))
-        #run_simple('0.0.0.0', 8080, application)
-        run_simple('localhost', 8080, application)
+        run_simple('0.0.0.0', 8080, application)
+        #run_simple('localhost', 8080, application)
     except IndexError as err: 
        print 'Please enter the name of the game to play (tictactoe, snap etc)'

@@ -11,13 +11,16 @@ class Player(object):
     def __init__(self, path):
         tree = ET.parse('data/' + path + '.xml')
         root = tree.getroot()
-        
-        data = {"Token": "", "BotName": "", "BotVersion": "", "Game": "", "RPCEndpoint": "", "ProgrammingLanguage": ""}
 
-        for child in root:
+        config = ET.parse('data/config.xml')
+        configTree = config.getroot()
 
-            data['Game'] = root.get('game')
-            data['ProgrammingLanguage'] = root.get('language')
+        data = {"Token": "", "BotName": "", "BotVersion": "", "Game": "", "RPCEndpoint": "", "ProgrammingLanguage": ""} 
+
+        data['Game'] = root.get('game')
+        data['ProgrammingLanguage'] = root.get('language')
+
+        for child in configTree:
 
             if child.tag == 'token':
                 data['Token'] = child.text

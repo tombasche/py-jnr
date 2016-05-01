@@ -34,6 +34,7 @@ class ScrabblePiece(object):
     x = 0
     y = 0
     letter = "A"
+    owned = False
 
     def __init__(self,x,y):
         self.x = x
@@ -65,7 +66,7 @@ class ScrabbleBoard(object):
         totalScore = 0
         for i in range(self.w):
             for j in range(self.h):
-                if self.Board[i][j].letter is not None:
+                if self.Board[i][j].letter is not None and self.Board[i][j].owned is True:
                     totalScore += letterScore[self.Board[i][j].letter]
         print totalScore
 

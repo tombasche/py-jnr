@@ -3,39 +3,74 @@ import random
 from datetime import datetime
 from jsonrpc import JSONRPCResponseManager, dispatcher
 
-class TicTacToe:
+
+class Move(object):
+    side = None
+    position = 0
+
+    def __init__(self, side, position):
+        self.side = side
+        self.position = position
 
 
-    @staticmethod
-    def getMove(gamestate):
+class Solver(object):
+    pass
 
-        availableMoves = gamestate
-        lookupIndex = 0
 
-        for index in range(len(gamestate)):
-            if gamestate[index] == "":
-                availableMoves[index] = True
-            else:
-                availableMoves[index] = False
+class Tile(object):
 
-        for i in range(len(availableMoves)):
-            if availablesMoves[index] == True and index % 2 == 0 and index != 4:        
-                return i
-            elif availablesMoves[index] == True:
-                return i
-        # for move in range(len(availableMoves)):
-        #     randomIndex = random.randrange(len(availableMoves))
-        #     if availableMoves[randomIndex] == True:
-        #         return randomIndex
+    position = 0
+    mark = ""
+
+    def __init__(self, x, mark):
+        self.position = x
+        self.mark = mark
+
+    def setMark(self, mark):
+        #print mark
+        self.mark = mark
+
+
+class Board(object):
+
+    length = 9
+
+    def __init__(self):
+        self.Board = [Tile(x, "") for x in range(self.length)]
+
+
+    def printBoard(self):
+        for i in range(self.length):
+            print self.Board[i].mark
+
+
+class TicTacToe(object):
+
+    gameBoard = Board()
+
+    def __init__(self, board):
+        self.gameBoard = Board()
+        count = 0
+        for i in board:
+            self.gameBoard.Board[count].setMark(i)
+            count += 1
+            #self.gameBoard.getBoard()[count].setMark(i)
 
 
     @staticmethod
     def NextMove(gameid, mark, gamestate):
 
-        move = TicTacToe.getMove(gamestate)
+        t = TicTacToe(gamestate)
+        t.gameBoard.printBoard()
+        #print t.gameBoard.printBoard()
+
+        # move = getMove(gamestate, mark)
+        # print gameid
+          
+        # print 
 
         returnMessage = {
-            "position": move
+            "position": None
         } 
         return returnMessage
 
