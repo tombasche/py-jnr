@@ -40,5 +40,5 @@ class Player(object):
            "id": 1
         }
 
-        #response = requests.post(url, data=json.dumps(registerMessage), headers=headers)
-        #print response
+        response = requests.post(url, data=json.dumps(registerMessage), headers=headers)
+        print response

@@ -18,8 +18,10 @@ def application(request):
 
     # if we pass in the arg "tictactoe" then we know to accept tictactoe messages
     if sys.argv[1] == "tictactoe":  
-        jsonLoad = json.loads(request.data)
-        gamestate = jsonLoad['params']['gamestate']
+
+        if json.loads(request.data)['params'] is not None:
+            jsonLoad = json.loads(request.data)
+            gamestate = jsonLoad['params']['gamestate']
 
         dispatcher["TicTacToe.Error"] = TicTacToe.Error
         dispatcher["TicTacToe.NextMove"] = TicTacToe.NextMove

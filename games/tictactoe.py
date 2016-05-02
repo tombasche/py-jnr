@@ -3,20 +3,6 @@ import random
 from datetime import datetime
 from jsonrpc import JSONRPCResponseManager, dispatcher
 
-
-class Move(object):
-    side = None
-    position = 0
-
-    def __init__(self, side, position):
-        self.side = side
-        self.position = position
-
-
-class Solver(object):
-    pass
-
-
 class Tile(object):
 
     position = 0
@@ -24,10 +10,9 @@ class Tile(object):
 
     def __init__(self, x, mark):
         self.position = x
-        self.mark = mark
+        self.mark = ""
 
     def setMark(self, mark):
-        #print mark
         self.mark = mark
 
 
@@ -35,13 +20,85 @@ class Board(object):
 
     length = 9
 
+
     def __init__(self):
         self.Board = [Tile(x, "") for x in range(self.length)]
 
 
-    def printBoard(self):
+    def findLegalMove(self):
         for i in range(self.length):
-            print self.Board[i].mark
+            if self.Board[i].mark == "":
+                return i
+            else:
+                None
+
+
+    def makeMove(self, mark):
+
+        availablePlaces = 0
+
+        if self.checkDefense(mark) is None:
+            for i in range(self.length):
+                if self.Board[i].mark == "":
+                    return self.findLegalMove() 
+        else:
+            return self.checkDefense(mark)
+
+    def checkDefense(self, mark):
+
+        # check rows
+        if self.Board[0].mark == self.Board[1].mark and self.Board[2].mark == "":
+            return 2
+        elif self.Board[1].mark == self.Board[2].mark and self.Board[0].mark == "":
+            return 0
+        elif self.Board[0].mark == self.Board[2].mark and self.Board[1].mark == "":
+            return 1
+        elif self.Board[3].mark == self.Board[4].mark and self.Board[5].mark == "":
+            return 5
+        elif self.Board[4].mark == self.Board[5].mark and self.Board[3].mark == "":
+            return 3
+        elif self.Board[3].mark == self.Board[5].mark and self.Board[4].mark == "":
+            return 4
+        elif self.Board[6].mark == self.Board[7].mark and self.Board[8].mark == "":
+            return 8
+        elif self.Board[7].mark == self.Board[8].mark and self.Board[6].mark == "":
+            return 6
+        elif self.Board[6].mark == self.Board[8].mark and self.Board[7].mark == "":
+            return 7
+        # check columns
+        elif self.Board[0].mark == self.Board[3].mark and self.Board[6].mark == "":
+            return 6
+        elif self.Board[3].mark == self.Board[6].mark and self.Board[0].mark == "":
+            return 0
+        elif self.Board[0].mark == self.Board[6].mark and self.Board[3].mark == "":
+            return 3
+        elif self.Board[1].mark == self.Board[4].mark and self.Board[7].mark == "":
+            return 7
+        elif self.Board[4].mark == self.Board[7].mark and self.Board[1].mark == "":
+            return 1
+        elif self.Board[1].mark == self.Board[7].mark and self.Board[4].mark == "":
+            return 4
+        elif self.Board[2].mark == self.Board[5].mark and self.Board[8].mark == "":
+            return 8
+        elif self.Board[5].mark == self.Board[8].mark and self.Board[2].mark == "":
+            return 2
+        elif self.Board[2].mark == self.Board[8].mark and self.Board[5].mark == "":
+            return 5
+        # check diagonals
+        elif self.Board[0].mark == self.Board[4].mark and self.Board[8].mark == "":
+            return 8
+        elif self.Board[4].mark == self.Board[8].mark and self.Board[0].mark == "":
+            return 0
+        elif self.Board[0].mark == self.Board[8].mark and self.Board[4].mark == "":
+            return 4
+        elif self.Board[2].mark == self.Board[4].mark and self.Board[6].mark == "":
+            return 6
+        elif self.Board[4].mark == self.Board[6].mark and self.Board[2].mark == "":
+            return 2
+        elif self.Board[2].mark == self.Board[6].mark and self.Board[4].mark == "":
+            return 4
+        else:
+            return None
 
 
 class TicTacToe(object):
@@ -54,23 +111,16 @@ class TicTacToe(object):
         for i in board:
             self.gameBoard.Board[count].setMark(i)
             count += 1
-            #self.gameBoard.getBoard()[count].setMark(i)
 
 
     @staticmethod
-    def NextMove(gameid, mark, gamestate):
+    def NextMove(gameid, mark, gamestate, opponent):
 
         t = TicTacToe(gamestate)
-        t.gameBoard.printBoard()
-        #print t.gameBoard.printBoard()
 
-        # move = getMove(gamestate, mark)
-        # print gameid
-          
-        # print 
-
+        position = t.gameBoard.makeMove(mark)
         returnMessage = {
-            "position": None
+            "position": position
         } 
         return returnMessage
 
@@ -83,4 +133,5 @@ class TicTacToe(object):
 
     @staticmethod
     def Error(gameid, message, errorcode):
+        print message
         return "OK"
