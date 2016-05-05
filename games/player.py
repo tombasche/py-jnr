@@ -15,7 +15,7 @@ class Player(object):
         config = ET.parse('data/config.xml')
         configTree = config.getroot()
 
-        data = {"Token": "", "BotName": "", "BotVersion": "", "Game": "", "RPCEndpoint": "", "ProgrammingLanguage": ""} 
+        data = {"Token": "", "BotName": "", "BotVersion": "", "Game": "", "RPCEndpoint": "", "ProgrammingLanguage": "", "Website": "", "Description": ""} 
 
         data['Game'] = root.get('game')
         data['ProgrammingLanguage'] = root.get('language')
@@ -32,6 +32,10 @@ class Player(object):
                 data['RPCEndpoint'] = child.text
             if child.tag == 'url':
                 url = child.text
+            if child.tag == 'website':
+                data['Website'] = child.text
+            if child.tag == 'description':
+                data['Description'] = child.text
 
         registerMessage = {
            "method": "RegistrationService.Register",
@@ -40,5 +44,5 @@ class Player(object):
            "id": 1
         }
 
-        response = requests.post(url, data=json.dumps(registerMessage), headers=headers)
-        print response
+        # response = requests.post(url, data=json.dumps(registerMessage), headers=headers)
+        # print response

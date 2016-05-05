@@ -40,11 +40,11 @@ class ScrabblePiece(object):
         self.x = x
         self.y =y
 
-        if self.x == 0 and self.y == 0:
-            self.attribute = "3xW"
+        # if self.x == 0 and self.y == 0:
+        #     self.attribute = "3xW"
 
-        elif self.x == self.y:
-            self.attribute = "2xW"
+        # elif self.x == self.y:
+        #     self.attribute = "2xW"
 
 
 
@@ -69,6 +69,8 @@ class ScrabbleBoard(object):
                 if self.Board[i][j].letter is not None and self.Board[i][j].owned is True:
                     totalScore += letterScore[self.Board[i][j].letter]
         print totalScore
+
+    
 
     # def CheckPieceScore(self, i, j):
     #     if self.board[i][j] = True:
